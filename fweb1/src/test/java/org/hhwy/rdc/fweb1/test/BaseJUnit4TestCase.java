@@ -1,5 +1,6 @@
 package org.hhwy.rdc.fweb1.test;
 
+import java.util.Date;
 import java.util.Random;
 
 import org.hhwy.rdc.fweb1.Utility;
@@ -23,9 +24,16 @@ public class BaseJUnit4TestCase extends
 	protected boolean getRandomBoolean() {
 		return getRandomInt() > MAX / 2;
 	}
-	
+
 	protected String getRandomString(){
 		return Utility.randomString(5) + ",≤‚ ‘";
 	}
+	
+	protected Date getRandomDate(){
+		return new Date((long) (Math.random() * 1E8));
+	}
 
+	protected double getRandomDouble(){
+		return Math.random() * 1E3;
+	}
 }

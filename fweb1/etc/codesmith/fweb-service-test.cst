@@ -35,17 +35,6 @@ public class <%=GetDomainClassName()%>ServiceTest extends BaseJUnit4TestCase {
 	
 	@Autowired
 	private <%=GetDomainClassName()%>Service service;
-	
-    @Test
-	public void insertTest(){
-    	<%=GetDomainClassName()%> <%=GetDomainClassName()%> = new <%=GetDomainClassName()%>();
-		<%=GetDomainClassName()%>.setFieldT01("ttt");
-		<%=GetDomainClassName()%>.setFieldT02(1.11);
-		
-		service.insert(<%=GetDomainClassName()%>);
-        
-        
-	}
     
 	@Test
 	public void allServiceTest() {
@@ -55,8 +44,16 @@ public class <%=GetDomainClassName()%>ServiceTest extends BaseJUnit4TestCase {
 
 		for (int i = 0; i < objectCount; i++) {
 			<%=GetDomainClassName()%> <%=GetDomainVariableName()%> = new <%=GetDomainClassName()%>();
-			<%=GetDomainVariableName()%>.setFieldT01(this.getRandomString());
-			<%=GetDomainVariableName()%>.setFieldT02(Math.rint(1000));
+            <%foreach(ColumnSchema col in SourceTable.Columns){%>   
+        <%if(col.Name.ToUpper() == "ID" || col.Name.ToUpper() == "VERSION" ) {  continue; }%>
+        <%if(GetJavaType(col) == "Date") { %> 
+        
+            <%=GetDomainVariableName()%>.set<%=StringUtil.ToPascalCase(col.Name)%>(this.getRandomDate()); <% continue; }%>
+        <%if(GetJavaType(col) == "int") { %> 
+            <%=GetDomainVariableName()%>.set<%=StringUtil.ToPascalCase(col.Name)%>(this.getRandomInt()); <% continue; }%>
+        <%if(GetJavaType(col) == "double") { %> 
+            <%=GetDomainVariableName()%>.set<%=StringUtil.ToPascalCase(col.Name)%>(this.getRandomDouble()); <% continue; }%>
+			<%=GetDomainVariableName()%>.set<%=StringUtil.ToPascalCase(col.Name)%>(this.getRandomString());<%}%>
 
 			service.insert(fieldTypes);
 
